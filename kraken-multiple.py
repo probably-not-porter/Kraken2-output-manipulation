@@ -37,14 +37,15 @@ def input_dir(dir):
 	assert (len(files)!=0), "The directory is empty"
 	path=[]
 	for f in files:
-		fipath=os.path.join(dir,f)
-		path.append(fipath)
-		report=open(fipath, 'r')
-		for line in report:
-			fields=line.split('\t')
-			cols=len(fields)
-			assert (cols==6), "The %s file is not kraken2 summary report" %report
-			break
+		if f[-4:] == ".out":			# Added by porter, ignore all files that are not *.out files
+			fipath=os.path.join(dir,f)
+			path.append(fipath)
+			report=open(fipath, 'r')
+			for line in report:
+				fields=line.split('\t')
+				cols=len(fields)
+				assert (cols==6), "The %s file is not kraken2 summary report" %report
+				break
 	print ("Checking input file done")	
 	return (path)
 
